@@ -259,6 +259,7 @@ public class FileSelectActivity extends AppCompatActivity implements OnTouchList
 	private static boolean mChangeTextSize = false;
 
 	private static final int REQUEST_CODE = 1;
+	private static boolean mThumbnail_Skip = false;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -893,7 +894,7 @@ public class FileSelectActivity extends AppCompatActivity implements OnTouchList
 				case CloseDialog.CLICK_PREVLAST:
 				case CloseDialog.CLICK_NEXTLAST: {
 					if	(nextfile.getType() == FileData.FILETYPE_TXT)	{
-						int maxpage = mSharedPreferences.getInt(DEF.createUrl(DEF.relativePath(mActivity, mURI, mPath, nextfile.getName()), user, pass), DEF.PAGENUMBER_NONE);
+						int maxpage = mSharedPreferences.getInt(DEF.createUrl(DEF.relativePath(mActivity, mURI, mPath, nextfile.getName()), user, pass) + "#maxpage", DEF.PAGENUMBER_NONE);
 						if	(maxpage > 0) {
 							//	未読で無かった場合
 							ed = mSharedPreferences.edit();
@@ -914,7 +915,7 @@ public class FileSelectActivity extends AppCompatActivity implements OnTouchList
 							releaseManager();
 						}
 					}
-					if (mFileData.getType() == FileData.FILETYPE_EPUB)	{
+					if (nextfile.getType() == FileData.FILETYPE_EPUB)	{
 						if	(DEF.TEXT_VIEWER == mEpubViewer) {
 							int maxpage = mSharedPreferences.getInt(DEF.createUrl(DEF.relativePath(mActivity, mURI, mPath, nextfile.getName()), user, pass) + "META-INF/container.xml" + "#maxpage", DEF.PAGENUMBER_NONE);
 							if	(maxpage > 0) {
@@ -937,7 +938,7 @@ public class FileSelectActivity extends AppCompatActivity implements OnTouchList
 							}
 						}
 						else {
-							int maxpage = mSharedPreferences.getInt(DEF.createUrl(DEF.relativePath(mActivity, mURI, mPath, nextfile.getName()), user, pass), DEF.PAGENUMBER_NONE);
+							int maxpage = mSharedPreferences.getInt(DEF.createUrl(DEF.relativePath(mActivity, mURI, mPath, nextfile.getName()), user, pass) + "#maxpage", DEF.PAGENUMBER_NONE);
 							if	(maxpage > 0) {
 								//	未読で無かった場合
 								ed = mSharedPreferences.edit();
@@ -958,9 +959,9 @@ public class FileSelectActivity extends AppCompatActivity implements OnTouchList
 						}
 						ed.apply();
 					}
-					if (mFileData.getType() == FileData.FILETYPE_ARC
-							|| mFileData.getType() == FileData.FILETYPE_PDF){
-						int maxpage = mSharedPreferences.getInt(DEF.createUrl(DEF.relativePath(mActivity, mURI, mPath, nextfile.getName()), user, pass), DEF.PAGENUMBER_NONE);
+					if (nextfile.getType() == FileData.FILETYPE_ARC
+							|| nextfile.getType() == FileData.FILETYPE_PDF){
+						int maxpage = mSharedPreferences.getInt(DEF.createUrl(DEF.relativePath(mActivity, mURI, mPath, nextfile.getName()), user, pass) + "#maxpage", DEF.PAGENUMBER_NONE);
 						if	(maxpage > 0) {
 							//	未読で無かった場合
 							ed = mSharedPreferences.edit();
@@ -1291,6 +1292,8 @@ public class FileSelectActivity extends AppCompatActivity implements OnTouchList
 				case KeyEvent.KEYCODE_BACK:
 					int listtype = mListScreenView.getListType();
 					if(listtype != RecordList.TYPE_FILELIST){
+						// サムネイルを読み込ませる
+						loadThumbnail();
 						switchFileList(); // ファイルリストをアクティブ化
 						return true;
 					}
@@ -2251,7 +2254,13 @@ public class FileSelectActivity extends AppCompatActivity implements OnTouchList
 		}
 		if (thumbload) {
 			// サムネイルの読込
-			loadThumbnail();
+			if	(mThumbnail_Skip)	{
+				// サムネイル読み込みをスキップさせる
+				mThumbnail_Skip = false;
+			} 
+			else {
+				loadThumbnail();
+			}
 		}
 	}
 
@@ -4271,6 +4280,10 @@ public class FileSelectActivity extends AppCompatActivity implements OnTouchList
 						mLoadListNextPath = FileAccess.parent(mActivity, path);
 					}
 					mLoadListNextInFile = file;
+					// サムネイル解放
+					releaseThumbnail();
+					// サムネイル読み込みをスキップさせる
+					mThumbnail_Skip = true;
 				}
 				else if (type == RecordItem.TYPE_IMAGE) {
 					if (debug) {Log.d(TAG, "onItemClick: ディレクトリ内のイメージファイル閲覧.");}
@@ -4278,6 +4291,10 @@ public class FileSelectActivity extends AppCompatActivity implements OnTouchList
 					mLoadListNextFile = file;
 					mLoadListNextPath = path;
 					mLoadListNextInFile = "";
+					// サムネイル解放
+					releaseThumbnail();
+					// サムネイル読み込みをスキップさせる
+					mThumbnail_Skip = true;
 				}
 				else if (type == RecordItem.TYPE_TEXT || type == RecordItem.TYPE_IMAGEDIRECT) {
 					if (debug) {Log.d(TAG, "onItemClick: テキストまたはイメージ直接指定.");}
@@ -4285,6 +4302,10 @@ public class FileSelectActivity extends AppCompatActivity implements OnTouchList
 					mLoadListNextFile = file;
 					mLoadListNextPath = path;
 					mLoadListNextInFile = image;
+					// サムネイル解放
+					releaseThumbnail();
+					// サムネイル読み込みをスキップさせる
+					mThumbnail_Skip = true;
 				}
 				else {
 					mLoadListNextPath = path;
