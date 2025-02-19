@@ -309,7 +309,7 @@ public class FileSelectList implements Runnable, Callback, DialogInterface.OnDis
 							if (maxpage == DEF.PAGENUMBER_NONE) {
 								state = DEF.PAGENUMBER_UNREAD;
 								size = DEF.PAGENUMBER_NONE;
-							} else if (state + 1 >= maxpage - 1) {
+							} else if (state + 1 >= maxpage) {
 								// 0から始まるので+1、見開きの分で-1
 								state = DEF.PAGENUMBER_READ;
 								size = maxpage;
@@ -321,7 +321,7 @@ public class FileSelectList implements Runnable, Callback, DialogInterface.OnDis
 							if (maxpage == DEF.PAGENUMBER_NONE) {
 								state = DEF.PAGENUMBER_UNREAD;
 								size = DEF.PAGENUMBER_NONE;
-							} else if (state + 1 >= maxpage - 1) {
+							} else if (state + 1 >= maxpage) {
 								// 0から始まるので+1、見開きの分で-1
 								state = DEF.PAGENUMBER_READ;
 								size = maxpage;
@@ -359,7 +359,7 @@ public class FileSelectList implements Runnable, Callback, DialogInterface.OnDis
 							if (maxpage == DEF.PAGENUMBER_NONE) {
 								state = DEF.PAGENUMBER_UNREAD;
 								size = DEF.PAGENUMBER_NONE;
-							} else if (state + 1 >= maxpage - 1) {
+							} else if (state + 1 >= maxpage) {
 								// 0から始まるので+1、見開きの分で-1
 								state = DEF.PAGENUMBER_READ;
 								size = maxpage;
@@ -371,7 +371,7 @@ public class FileSelectList implements Runnable, Callback, DialogInterface.OnDis
 							if (maxpage == DEF.PAGENUMBER_NONE) {
 								state = DEF.PAGENUMBER_UNREAD;
 								size = DEF.PAGENUMBER_NONE;
-							} else if (state + 1 >= maxpage - 1) {
+							} else if (state + 1 >= maxpage) {
 								// 0から始まるので+1、見開きの分で-1
 								state = DEF.PAGENUMBER_READ;
 								size = maxpage;
@@ -409,7 +409,7 @@ public class FileSelectList implements Runnable, Callback, DialogInterface.OnDis
 								if (maxpage == DEF.PAGENUMBER_NONE) {
 									state = DEF.PAGENUMBER_UNREAD;
 									size = DEF.PAGENUMBER_NONE;
-								} else if (state + 1 >= maxpage - 1) {
+								} else if (state + 1 >= maxpage) {
 									// 0から始まるので+1、見開きの分で-1
 									state = DEF.PAGENUMBER_READ;
 									size = maxpage;
@@ -421,7 +421,7 @@ public class FileSelectList implements Runnable, Callback, DialogInterface.OnDis
 								if (maxpage == DEF.PAGENUMBER_NONE) {
 									state = DEF.PAGENUMBER_UNREAD;
 									size = DEF.PAGENUMBER_NONE;
-								} else if (state + 1 >= maxpage - 1) {
+								} else if (state + 1 >= maxpage) {
 									// 0から始まるので+1、見開きの分で-1
 									state = DEF.PAGENUMBER_READ;
 									size = maxpage;
@@ -454,7 +454,7 @@ public class FileSelectList implements Runnable, Callback, DialogInterface.OnDis
 								if (maxpage == DEF.PAGENUMBER_NONE) {
 									state = DEF.PAGENUMBER_UNREAD;
 									size = DEF.PAGENUMBER_NONE;
-								} else if (state + 1 >= maxpage - 1) {
+								} else if (state + 1 >= maxpage) {
 									// 0から始まるので+1、見開きの分で-1
 									state = DEF.PAGENUMBER_READ;
 									size = maxpage;
@@ -466,7 +466,7 @@ public class FileSelectList implements Runnable, Callback, DialogInterface.OnDis
 								if (maxpage == DEF.PAGENUMBER_NONE) {
 									state = DEF.PAGENUMBER_UNREAD;
 									size = DEF.PAGENUMBER_NONE;
-								} else if (state + 1 >= maxpage - 1) {
+								} else if (state + 1 >= maxpage) {
 									// 0から始まるので+1、見開きの分で-1
 									state = DEF.PAGENUMBER_READ;
 									size = maxpage;
@@ -504,7 +504,7 @@ public class FileSelectList implements Runnable, Callback, DialogInterface.OnDis
 							if (maxpage == DEF.PAGENUMBER_NONE) {
 								state = DEF.PAGENUMBER_UNREAD;
 								size = DEF.PAGENUMBER_NONE;
-							} else if (state + 1 >= maxpage - 1) {
+							} else if (state + 1 >= maxpage) {
 								// 0から始まるので+1、見開きの分で-1
 								state = DEF.PAGENUMBER_READ;
 								size = maxpage;
@@ -516,7 +516,7 @@ public class FileSelectList implements Runnable, Callback, DialogInterface.OnDis
 							if (maxpage == DEF.PAGENUMBER_NONE) {
 								state = DEF.PAGENUMBER_UNREAD;
 								size = DEF.PAGENUMBER_NONE;
-							} else if (state + 1 >= maxpage - 1) {
+							} else if (state + 1 >= maxpage) {
 								// 0から始まるので+1、見開きの分で-1
 								state = DEF.PAGENUMBER_READ;
 								size = maxpage;
