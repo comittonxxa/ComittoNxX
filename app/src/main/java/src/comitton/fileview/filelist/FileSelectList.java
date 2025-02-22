@@ -38,6 +38,7 @@ public class FileSelectList implements Runnable, Callback, DialogInterface.OnDis
 	private static final String mStaticRootDir = Environment.getExternalStorageDirectory().getAbsolutePath() +"/";
 
 	private ArrayList<FileData> mFileList = null;
+	private ArrayList<FileData> m2FileList = null;
 
 	private String mURI;
 	private String mPath;
@@ -86,6 +87,7 @@ public class FileSelectList implements Runnable, Callback, DialogInterface.OnDis
 	private static int mAscMode;	// 半角の表示方法
 	private static String mFontFile;
 	private static boolean mChangeTextSize = false;
+	private static boolean mCacheFile = false;
 
 	public FileSelectList(Handler handler, AppCompatActivity activity, SharedPreferences sp) {
 		mActivityHandler = handler;
@@ -213,6 +215,11 @@ public class FileSelectList implements Runnable, Callback, DialogInterface.OnDis
 		mChangeTextSize = true;
 	}
 
+	public static void FlashFileList()
+	{
+		mCacheFile = false;
+	}
+
 	@Override
 	public void run() {
 		boolean debug = false;
@@ -237,41 +244,48 @@ public class FileSelectList implements Runnable, Callback, DialogInterface.OnDis
 		String currentPath = DEF.relativePath(mActivity, mURI, mPath);
 
 		try {
-			fileList = FileAccess.listFiles(mActivity, currentPath, mUser, mPass, mHandler);
+			if	(mCacheFile == false)	{
+				fileList = FileAccess.listFiles(mActivity, currentPath, mUser, mPass, mHandler);
 
-			if (thread.isInterrupted()) {
-				// 処理中断
-				return;
+				if (thread.isInterrupted()) {
+					// 処理中断
+					return;
+				}
+
+				if (fileList.isEmpty()) {
+					// ファイルがない場合
+					Log.d(TAG, "run ファイルがありません.");
+					fileList = new ArrayList<FileData>();
+					String uri = FileAccess.parent(mActivity, mPath);
+					FileData fileData;
+
+					if (!uri.isEmpty() && mParentMove) {
+						// 親フォルダを表示
+						fileData = new FileData(mActivity, "..", DEF.PAGENUMBER_NONE);
+						fileList.add(fileData);
+					}
+
+					// ローカルの初期フォルダより上のフォルダの場合
+					if(debug) {Log.d(TAG, "run: mStaticRootDir=" + mStaticRootDir + ", mURI=" + mURI + ", mPath=" + mPath + ", currentPath=" + currentPath);}
+					if (mStaticRootDir.startsWith(currentPath) && !mStaticRootDir.equals(currentPath)) {
+						int pos = mStaticRootDir.indexOf("/", mPath.length());
+						String dir = mStaticRootDir.substring(mPath.length(), pos + 1);
+
+						//途中のフォルダを表示対象に追加
+						fileData = new FileData(mActivity, dir, DEF.PAGENUMBER_UNREAD);
+						fileList.add(fileData);
+					}
+
+					// 処理中断
+					sendResult(true, thread);
+					mFileList = fileList;
+					return;
+				}
+				m2FileList = fileList;
+				mCacheFile = true;
 			}
-
-			if (fileList.isEmpty()) {
-				// ファイルがない場合
-				Log.d(TAG, "run ファイルがありません.");
-				fileList = new ArrayList<FileData>();
-				String uri = FileAccess.parent(mActivity, mPath);
-				FileData fileData;
-
-				if (!uri.isEmpty() && mParentMove) {
-					// 親フォルダを表示
-					fileData = new FileData(mActivity, "..", DEF.PAGENUMBER_NONE);
-					fileList.add(fileData);
-				}
-
-				// ローカルの初期フォルダより上のフォルダの場合
-				if(debug) {Log.d(TAG, "run: mStaticRootDir=" + mStaticRootDir + ", mURI=" + mURI + ", mPath=" + mPath + ", currentPath=" + currentPath);}
-				if (mStaticRootDir.startsWith(currentPath) && !mStaticRootDir.equals(currentPath)) {
-					int pos = mStaticRootDir.indexOf("/", mPath.length());
-					String dir = mStaticRootDir.substring(mPath.length(), pos + 1);
-
-					//途中のフォルダを表示対象に追加
-					fileData = new FileData(mActivity, dir, DEF.PAGENUMBER_UNREAD);
-					fileList.add(fileData);
-				}
-
-				// 処理中断
-				sendResult(true, thread);
-				mFileList = fileList;
-				return;
+			else	{
+				fileList = m2FileList;
 			}
 
 			String uri = FileAccess.parent(mActivity, mPath);
