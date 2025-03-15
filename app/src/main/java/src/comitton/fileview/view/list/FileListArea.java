@@ -346,11 +346,11 @@ public class FileListArea extends ListArea implements Handler.Callback {
 
 							if (bmMark != null) {
 								canvas.drawBitmap(bmMark, x + mIconWidth - mMarkSizeW, y + mIconHeight - mMarkSizeH, mBitmapPaint);
-								if (debug) {Log.d(TAG,"run: fd.getState()=" + fd.getState() + ", fd.getSize()=" + fd.getSize() + ", fd.getName()=" + fd.getName());}
-								if ((fd.getState() >= 0) && (fd.getSize() > 0)) {
+								if (debug) {Log.d(TAG,"run: fd.getState()=" + fd.getState() + ", fd.getMaxpage()=" + fd.getMaxpage() + ", fd.getName()=" + fd.getName());}
+								if ((fd.getState() >= 0) && (fd.getMaxpage() > 0)) {
 									// 読書率を描画
 									// 読書率
-									float rate = (float)(fd.getState() + 1) / (float)fd.getSize();
+									float rate = (float)(fd.getState() + 1) / (float)fd.getMaxpage();
 									// 文字サイズ
 									float fontsize = mTileSize;
 									Paint paint = new Paint();
@@ -455,10 +455,10 @@ public class FileListArea extends ListArea implements Handler.Callback {
 						mSrcRect.set(0, 0, dstWidth, dstHeight);
 						mDstRect.set(x + dstX, y + dstY, x + dstX + (int)(dstWidth * dsMin), y + dstY + (int)(dstHeight * dsMin));
 						canvas.drawBitmap(bm, mSrcRect, mDstRect, mBitmapPaint);
-						if ((fd.getState() >= 0) && (fd.getSize() > 0)) {
+						if ((fd.getState() >= 0) && (fd.getMaxpage() > 0)) {
 							// 読書率を描画
 							// 読書率
-							float rate = (float)(fd.getState() + 1) / (float)fd.getSize();
+							float rate = (float)(fd.getState() + 1) / (float)fd.getMaxpage();
 							// 文字サイズ
 							float fontsize = mTileSize;
 							Paint paint = new Paint();
@@ -778,10 +778,10 @@ public class FileListArea extends ListArea implements Handler.Callback {
 
 						if (bmMark != null) {
                             canvas.drawBitmap(bmMark, x + dstX + dstWidth - mMarkSizeW, y + iconHeight - mMarkSizeH, mBitmapPaint);
-							if ((fd.getState() >= 0) && (fd.getSize() > 0)) {
+							if ((fd.getState() >= 0) && (fd.getMaxpage() > 0)) {
 								// 読書率を描画
 								// 読書率
-								float rate = (float)(fd.getState() + 1) / (float)fd.getSize();
+								float rate = (float)(fd.getState() + 1) / (float)fd.getMaxpage();
 								// 文字サイズ
 								float fontsize = Math.min(mTitleSize, mInfoSize);
 								Paint paint = new Paint();
@@ -884,10 +884,10 @@ public class FileListArea extends ListArea implements Handler.Callback {
 					mSrcRect.set(0, 0, dstWidth, dstHeight);
 					mDstRect.set(x + dstX, y + dstY, x + dstX + (int)(dstWidth * dsMin), y + dstY + (int)(dstHeight * dsMin));
 					canvas.drawBitmap(bm, mSrcRect, mDstRect, mBitmapPaint);
-					if ((fd.getState() >= 0) && (fd.getSize() > 0)) {
+					if ((fd.getState() >= 0) && (fd.getMaxpage() > 0)) {
 						// 読書率を描画
 						// 読書率
-						float rate = (float)(fd.getState() + 1) / (float)fd.getSize();
+						float rate = (float)(fd.getState() + 1) / (float)fd.getMaxpage();
 						// 文字サイズ
 						float fontsize = Math.min(mTitleSize, mInfoSize);
 						Paint paint = new Paint();
@@ -1242,6 +1242,7 @@ public class FileListArea extends ListArea implements Handler.Callback {
 				FileData fd = mFileList.get(index);
 				mTitleSep[index] = getMultiLine(fd.getName(), tcx, MAXLINE_TITLE, mNamePaint);
 
+				Log.d(TAG, "calcRowHeight:");
 				String info = fd.getFileInfo();
 				if (info != null) {
 					float result[] = new float[info.length()];
