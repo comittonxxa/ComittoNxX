@@ -343,7 +343,7 @@ public class FileSelectList implements Runnable, Callback, DialogInterface.OnDis
 								size = maxpage;
 							}
 						}
-						fileList.get(i).setSize(size);
+						fileList.get(i).setMaxpage(size);
 					}
 					fileList.get(i).setState(state);
 				}
@@ -393,7 +393,7 @@ public class FileSelectList implements Runnable, Callback, DialogInterface.OnDis
 								size = maxpage;
 							}
 						}
-						fileList.get(i).setSize(size);
+						fileList.get(i).setMaxpage(size);
 					}
 					fileList.get(i).setState(state);
 				}
@@ -443,7 +443,7 @@ public class FileSelectList implements Runnable, Callback, DialogInterface.OnDis
 									size = maxpage;
 								}
 							}
-							fileList.get(i).setSize(size);
+							fileList.get(i).setMaxpage(size);
 						}
 					}
 					else {
@@ -488,7 +488,7 @@ public class FileSelectList implements Runnable, Callback, DialogInterface.OnDis
 									size = maxpage;
 								}
 							}
-							fileList.get(i).setSize(size);
+							fileList.get(i).setMaxpage(size);
 						}
 					}
 					fileList.get(i).setState(state);
@@ -538,7 +538,7 @@ public class FileSelectList implements Runnable, Callback, DialogInterface.OnDis
 								size = maxpage;
 							}
 						}
-						fileList.get(i).setSize(size);
+						fileList.get(i).setMaxpage(size);
 					}
 					fileList.get(i).setState(state);
 				}
