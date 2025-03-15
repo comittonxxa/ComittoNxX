@@ -45,6 +45,7 @@ public class FileData {
 	private int state;		// 読書状態
 	private long size;
 	private long date;
+	private long maxpage;
 	private String uri;
 	private String display_uri;
 	private boolean marker;
@@ -245,6 +246,14 @@ public class FileData {
 	}
 	public long getSize() {
 		return this.size;
+	}
+
+	public long getMaxpage() {
+		return maxpage;
+	}
+
+	public void setMaxpage(long maxpage) {
+		this.maxpage = maxpage;
 	}
 
 	// ArrayListのindexOfから呼ばれる
