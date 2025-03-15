@@ -2319,7 +2319,7 @@ public class FileSelectActivity extends AppCompatActivity implements OnTouchList
 							//	最大ページ数に達した場合は既読にする
 							state = DEF.PAGENUMBER_READ;
 						}
-						data.setSize(maxpage);
+						data.setMaxpage(maxpage);
 					}
 					data.setState(state);
 				}
@@ -2351,7 +2351,7 @@ public class FileSelectActivity extends AppCompatActivity implements OnTouchList
 							//	最大ページ数に達した場合は既読にする
 							state = DEF.PAGENUMBER_READ;
 						}
-						data.setSize(maxpage - 1);
+						data.setMaxpage(maxpage - 1);
 					}
 					data.setState(state);
 				}
@@ -2385,7 +2385,7 @@ public class FileSelectActivity extends AppCompatActivity implements OnTouchList
 								//	最大ページ数に達した場合は既読にする
 								state = DEF.PAGENUMBER_READ;
 							}
-							data.setSize(maxpage - 1);
+							data.setMaxpage(maxpage - 1);
 						}
 						data.setState(state);
 					}
@@ -2416,7 +2416,7 @@ public class FileSelectActivity extends AppCompatActivity implements OnTouchList
 								//	最大ページ数に達した場合は既読にする
 								state = DEF.PAGENUMBER_READ;
 							}
-							data.setSize(maxpage - 1);
+							data.setMaxpage(maxpage - 1);
 						}
 						data.setState(state);
 					}
@@ -2539,6 +2539,8 @@ public class FileSelectActivity extends AppCompatActivity implements OnTouchList
 				// ボタン押下
 				int listindex = mListScreenView.mSelectorArea.sendTouchEvent(action, (int) x, (int) y);
 				if (listindex != -1) {
+					// サムネイル読み直し
+					loadThumbnail();
 					// リスト切り替え
 					int listtype = mListScreenView.getListType(listindex);
 					mListScreenView.updateRecordList(listtype);
