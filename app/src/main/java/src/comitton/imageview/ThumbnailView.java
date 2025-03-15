@@ -200,7 +200,10 @@ public class ThumbnailView extends View implements Runnable, Callback {
 			}
 		}
 
-		retValue = CallImgLibrary.ThumbnailDraw(mThumID, mDrawBitmap, page);
+		if	(retValue > 0)	{
+			// キャッシュの画像サイズが取得できている場合のみサムネイル描画
+			retValue = CallImgLibrary.ThumbnailDraw(mThumID, mDrawBitmap, page);
+		}
 		Rect rcSrc;
 		Rect rcDst;
 

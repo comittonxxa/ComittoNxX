@@ -3973,6 +3973,7 @@ public class ImageManager extends InputStream implements Runnable {
 	private boolean mScrFitDual;
 	private boolean mScrNoExpand;
 	private boolean mEpubOrder;
+	private int mZoomType;	// ルーペ表示の拡大率
 
 	// 画面変更
 	public void setViewSize(int width, int height) {
@@ -3993,7 +3994,7 @@ public class ImageManager extends InputStream implements Runnable {
 	}
 
 	// 設定変更
-	public void setConfig(int mode, int center, boolean fFitDual, int dispMode, boolean noExpand, int algoMode, int rotate, int wadjust, int wscale, int scale, int pageway, int mgncut, int mgncutcolor, int quality, int bright, int gamma, int sharpen, boolean invert, boolean gray, boolean pseland, boolean moire, boolean topsingle, boolean scaleinit, boolean epubOrder) {
+	public void setConfig(int mode, int center, boolean fFitDual, int dispMode, boolean noExpand, int algoMode, int rotate, int wadjust, int wscale, int scale, int pageway, int mgncut, int mgncutcolor, int quality, int bright, int gamma, int sharpen, boolean invert, boolean gray, boolean pseland, boolean moire, boolean topsingle, boolean scaleinit, boolean epubOrder, int zoomtype) {
 		boolean debug = false;
 		if (debug) {Log.d(TAG, "setConfig wscale=" + wscale + ", scale=" + scale);}
 		mScrScaleMode = mode;
@@ -4022,6 +4023,7 @@ public class ImageManager extends InputStream implements Runnable {
 		mMoire = moire ? 1 : 0;
 		mTopSingle = topsingle ? 1 : 0;
 		mEpubOrder = epubOrder;
+		mZoomType = zoomtype;
 
 		if (mCacheIndex >= 0) {
 			freeScaleCache();
@@ -4056,12 +4058,6 @@ public class ImageManager extends InputStream implements Runnable {
 				}
 			}
 		}
-	}
-
-	static int	loupemode;
-
-	public static void setloupemode(int mode)	{
-		loupemode = mode;
 	}
 
 	public boolean ImageScalingSync(int page1, int page2, int half1, int half2, ImageData img1, ImageData img2) {
@@ -4315,7 +4311,7 @@ public class ImageManager extends InputStream implements Runnable {
 		}
 
 		if (img1 != null) {
-			if	(loupemode >= 3)	{
+			if	(mZoomType >= 3)	{
 				img1.CutLeft = left[0];
 				img1.CutRight = right[0];
 				img1.CutTop = top[0];
@@ -4330,7 +4326,7 @@ public class ImageManager extends InputStream implements Runnable {
 			}
 		}
 		if (img2 != null) {
-			if	(loupemode >= 3)	{
+			if	(mZoomType >= 3)	{
 				img2.CutLeft = left[1];
 				img2.CutRight = right[1];
 				img2.CutTop = top[1];
