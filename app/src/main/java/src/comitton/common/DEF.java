@@ -95,6 +95,32 @@ public class DEF {
 	public static final int HMSG_ERROR_MALLOC = 22;
 	public static final int HMSG_APP_DOWNLOADS = 23;
 
+	public static final int HMSG_EVENT_READTIMER = 200;
+	public static final int HMSG_EVENT_EFFECT = 201;
+	public static final int HMSG_EVENT_SCROLL = 202;
+	public static final int HMSG_EVENT_LOADING = 203;
+	public static final int HMSG_EVENT_AUTOPLAY = 204;
+	public static final int HMSG_EVENT_TOUCH_ZOOM = 205;
+	public static final int HMSG_EVENT_TOUCH_TOP = 206;
+	public static final int HMSG_EVENT_TOUCH_BOTTOM = 207;
+	public static final int HMSG_EVENT_PAGE = 208;
+	public static final int HMSG_EVENT_ATTENUATE = 209;
+	public static final int HMSG_EVENT_MOMENTIUM = 210;
+	public static final int HMSG_EVENT_EFFECT_NEXT = 211;
+	public static final int HMSG_EVENT_SCROLL_NEXT = 212;
+	public static final int HMSG_EVENT_LOADING_NEXT = 213;
+
+	public static final int INTERVAL_DEFAULT = 50;	// Milliseconds
+	public static final int INTERVAL_EFFECT = 1;	// Milliseconds
+	public static final int INTERVAL_EFFECT_NEXT = 1;	// Milliseconds
+	public static final int INTERVAL_SCROLL = 4;	// Milliseconds
+	public static final int INTERVAL_SCROLL_NEXT = 4;	// Milliseconds
+	public static final int INTERVAL_LOADING = 500;	// Milliseconds
+	public static final int INTERVAL_LOADING_NEXT = 150;	// Milliseconds
+	public static final int INTERVAL_PAGE = 1;
+	public static final int INTERVAL_ATTENUATE = 10;
+	public static final int INTERVAL_MOMENTIUM = 10;
+
 	public static final int MENU_HELP = Menu.FIRST + 0;
 	public static final int MENU_SETTING = Menu.FIRST + 1;
 	public static final int MENU_SIORI = Menu.FIRST + 2;
@@ -721,6 +747,11 @@ public class DEF {
 	public static final String URL_COMMON = "";
 	public static final String URL_IMAGEVIEW = "";
 	public static final String URL_SERVER = "";
+
+	public static final int DISPMODE_IM_NORMAL = 0;
+	public static final int DISPMODE_IM_DUAL = 1;
+	public static final int DISPMODE_IM_HALF = 2;
+	public static final int DISPMODE_IM_EXCHANGE = 3;
 
 	public static final int DISPMODE_TX_DUAL = 0;
 	public static final int DISPMODE_TX_HALF = 1;
