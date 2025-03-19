@@ -98,6 +98,8 @@ public class MyImageView extends SurfaceView implements SurfaceHolder.Callback, 
 
 	private Point[] mScrollPos;
 	private Point mScrollPoint;
+	private Point mScrollStartPos = new Point();
+	private long mScrollStart;
 
 	// ルーペ機能
 	private int mZoomView = 300;
@@ -1651,6 +1653,8 @@ public class MyImageView extends SurfaceView implements SurfaceHolder.Callback, 
 	// 次の位置へスクロールする
 	public boolean setViewPosScroll(int move) {
 		
+		mScrollStart = SystemClock.uptimeMillis();
+
 //		Log.d("MyImageView", "setViewPosScroll(move=" + move + ", mOverScrollX=" + mOverScrollX +
 //				", mPageWay=" + (mPageWay == DEF.PAGEWAY_RIGHT ? "RIGHT" : "LEFT") +
 //				", mDrawLeft=" + mDrawLeft + ", mDrawWidthSum=" + mDrawWidthSum +
@@ -1714,6 +1718,7 @@ public class MyImageView extends SurfaceView implements SurfaceHolder.Callback, 
 		for (int i = 0 ; i < mScrollPos.length ; i++) {
 			int wk_x = (mScrollPos[i].x - (int)(mDrawLeft + mOverScrollX)) * move;
 			int wk_y = (mScrollPos[i].y - (int)mDrawTop) * move;
+			mScrollStartPos = new Point(wk_x, wk_y);
 			//Log.d("MyImageView", "setViewPosScroll mScrollPos[" + i +"]=(" + mScrollPos[i].x  + ", " + mScrollPos[i].y + ")" );
 			//Log.d("MyImageView", "setViewPosScroll wk_x=" + wk_x  + ", wk_y=" + wk_y );
 			if (wk_x >= 0 && wk_y >= 0) {
@@ -1746,6 +1751,35 @@ public class MyImageView extends SurfaceView implements SurfaceHolder.Callback, 
 */
 //		moveToNextPoint();
 		return true;
+	}
+
+	/**
+	 * 	スクロール所要時間が過ぎていればfalse
+	 */
+	public boolean checkScrollTime(int scrlRange) {
+		boolean result = true;
+		long now = SystemClock.uptimeMillis();
+
+		if (mScrollPoint == null || mScrollStartPos == null) {
+			return true;
+		}
+
+		int x_range, x_cnt;
+		int y_range, y_cnt;
+		int move_cnt;
+
+		x_range = mScrollPoint.x - mScrollStartPos.x;
+		y_range = mScrollPoint.y - mScrollStartPos.y;
+
+		x_cnt = (Math.abs(x_range) + scrlRange - 1) / scrlRange;
+		y_cnt = (Math.abs(y_range) + scrlRange - 1) / scrlRange;
+
+		move_cnt = x_cnt > y_cnt ? x_cnt : y_cnt;
+
+		if (now - mScrollStart > (long)move_cnt * DEF.INTERVAL_SCROLL_NEXT) {
+			result = false;
+		}
+		return result;
 	}
 
 	public boolean checkScrollPoint() {
