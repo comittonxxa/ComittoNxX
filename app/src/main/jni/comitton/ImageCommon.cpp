@@ -339,7 +339,8 @@ int DrawScaleBitmap(int index, int page, int rotate, int s_x, int s_y, int s_cx,
 // メモリ確保
 int MemAlloc(int index, int buffsize)
 {
-    int buffnum = buffsize * 2;
+
+    int buffnum = buffsize * 8 / sizeof(LONG);
     int ret = index;
 
     gIsInit[index] = true;
@@ -377,8 +378,8 @@ int MemAlloc(int index, int buffsize)
                 goto ERROREND;
             }
             gBuffMng[index][i].Page = -1;
+            gBuffNum[index] = i;
         }
-        gBuffNum[index] = i;
 
         // 拡大縮小画像領域確保
         gSclBuffMng[index] = (BUFFMNG *) malloc(sizeof(BUFFMNG) * SCLBUFFNUM);
@@ -451,6 +452,7 @@ void MemFree(int index)
         ScaleMemLineFree(index);
         ScaleMemColumnFree(index);
     }
+
     gIsInit[index] = false;
 }
 
