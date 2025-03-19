@@ -3122,6 +3122,7 @@ public class FileSelectActivity extends AppCompatActivity implements OnTouchList
 						intent.putExtra("User", mServer.getUser());
 						intent.putExtra("Pass", mServer.getPass());
 						intent.putExtra("aspectRatio", (float) mThumbSizeW / (float) mThumbSizeH);
+						intent.putExtra("Page", 0);
 						// サムネイル解放
 						releaseThumbnail();
 						startActivityForResult(intent, DEF.REQUEST_CROP);
