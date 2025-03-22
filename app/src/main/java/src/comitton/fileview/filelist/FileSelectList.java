@@ -281,6 +281,11 @@ public class FileSelectList implements Runnable, Callback, DialogInterface.OnDis
 					mFileList = fileList;
 					return;
 				}
+				String uri = FileAccess.parent(mActivity, mPath);
+				if (!uri.isEmpty() && mParentMove) {
+					FileData fileData = new FileData(mActivity, "..", DEF.PAGENUMBER_NONE);
+					fileList.add(0, fileData);
+				}
 				m2FileList = fileList;
 				mCacheFile = true;
 			}
@@ -289,10 +294,6 @@ public class FileSelectList implements Runnable, Callback, DialogInterface.OnDis
 			}
 
 			String uri = FileAccess.parent(mActivity, mPath);
-			if (!uri.isEmpty() && mParentMove) {
-				FileData fileData = new FileData(mActivity, "..", DEF.PAGENUMBER_NONE);
-				fileList.add(0, fileData);
-			}
 
 			for (int i = fileList.size() - 1; i >= 0; i--) {
 
