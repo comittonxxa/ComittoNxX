@@ -1809,7 +1809,7 @@ public class FileSelectActivity extends AppCompatActivity implements OnTouchList
 							mLoadListNextPage = DEF.PAGENUMBER_UNREAD;
 						} else if (lastView == DEF.LASTOPEN_IMAGE) {
 							if (!lastImage.isEmpty()) {
-								mLoadListNextFile = lastFile;
+								mLoadListNextFile = lastImage;
 								mLoadListNextPath = path;
 								mLoadListNextInFile = lastImage;
 								mLoadListNextPage = -2;
