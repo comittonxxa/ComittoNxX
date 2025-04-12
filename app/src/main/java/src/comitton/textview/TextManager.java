@@ -1547,7 +1547,8 @@ public class TextManager {
 						} else if (text.equalsIgnoreCase("??")) {
 							text = "⁇";
 						}
-						text = text.replaceAll(" ", "");
+						// 英文の空白が埋められるのでコメントアウトにする
+						//	text = text.replaceAll(" ", "");
 
 						if (tag_level_title > 0) {
 							if (!text.isEmpty()) {
@@ -1874,6 +1875,8 @@ public class TextManager {
 								inputSB.append(src_value);
 								inputSB.append("）入る］");
 							}
+							// 挿絵の後の文章を表示させるため改行コードを挿入
+							inputSB.append("\n");
 						} else if (tag_name.equalsIgnoreCase("title")) {
 							tag_level_title++;
 						} else if (tag_name.equalsIgnoreCase("body")) {
@@ -1965,7 +1968,8 @@ public class TextManager {
 						} else if (text.equalsIgnoreCase("??")) {
 							text = "⁇";
 						}
-						text = text.replaceAll(" ", "");
+						// 英文の空白が埋められるのでコメントアウトにする
+						//	text = text.replaceAll(" ", "");
 
 						if (tag_level_title > 0) {
 							if (!text.isEmpty()) {
